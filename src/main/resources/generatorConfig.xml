@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+  <context id="PGContext" targetRuntime="MyBatis3DynamicSql" defaultModelType="conditional">
+
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
+    <commentGenerator>
+      <property name="suppressAllComments" value="true" />
+      <property name="suppressDate" value="true" />
+    </commentGenerator>
+
+    <jdbcConnection connectionURL="jdbc:postgresql://localhost:5432/springdbagenda" 
+    				driverClass="org.postgresql.Driver" 
+    				password="postgres" 
+    				userId="postgres" />
+    <javaTypeResolver>
+      <!-- 数値型（Long, Integer, Short, etc.）をbigdecimalに変更するか -->
+      <property name="forceBigDecimals" value="true"/>
+      <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="com.contactspring.mybatis.generate.model" 
+    					targetProject="src/main/java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <javaClientGenerator targetPackage="com.contactspring.mybatis.generate.map" 
+    					targetProject="src/main/java">
+       <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+<!-- 
+    <table schema="public"
+           tableName="%">
+
+      <property name="ignoreQualifiersAtRuntime" value="true" />
+
+    </table>
+
+	<table schema="public" tableName="contact_fields"> 
+		<generatedKey column="id" sqlStatement="JDBC" identity="true" />
+	</table>
+	-->
+	<table tableName="contact_fields"> 
+		<generatedKey column="id" sqlStatement="JDBC" identity="true" />
+	</table>
+	<table tableName="role_properties"> 
+		<generatedKey column="role_id" sqlStatement="JDBC" identity="true" />
+	</table>		
+	<table tableName="user_basics"> 
+		<generatedKey column="id" sqlStatement="JDBC" identity="true" />
+	</table>		
+	<table tableName="user_properties"> 
+		<generatedKey column="id" sqlStatement="JDBC" identity="true" />
+	</table>		
+	<table tableName="user_security"> 
+		<generatedKey column="id" sqlStatement="JDBC" identity="true" />
+	</table>		
+	<table tableName="user_history"> 
+		<generatedKey column="id" sqlStatement="JDBC" identity="true" />
+	</table>		
+    </context>
+</generatorConfiguration>
