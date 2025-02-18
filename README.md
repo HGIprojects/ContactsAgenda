@@ -4,12 +4,5 @@ This is an ERP-like agenda for contacts with full user management, database impl
 
 This project uses:
 
-Spring Boot framework
-MyBatis
-Thymeleaf
-PostgreSQL
-HTML
-CSS
-Java
-JavaScript
+Spring Boot framework, MyBatis, Thymeleaf, PostgreSQL, HTML, CSS, Java and JavaScript.
 
