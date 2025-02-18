@@ -13,8 +13,8 @@
 
     <jdbcConnection connectionURL="jdbc:postgresql://localhost:5432/springdbagenda" 
     				driverClass="org.postgresql.Driver" 
-    				password="postgres" 
-    				userId="postgres" />
+    				password="ANON" 
+    				userId="ANON" />
     <javaTypeResolver>
       <!-- 数値型（Long, Integer, Short, etc.）をbigdecimalに変更するか -->
       <property name="forceBigDecimals" value="true"/>
