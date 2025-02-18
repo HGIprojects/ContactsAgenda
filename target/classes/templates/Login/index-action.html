@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Access denied</title>
+	</head>
+		<div th:switch="${action}">
+			<div th:case="'passwordReset'" style="margin-left: auto; margin-right: auto; width: 50%;">
+				<img src="/myAssets/images/email-sent.webp" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto; display: block;">
+				<h1 style="text-align: justify; width: 575px; margin-left: auto; margin-right:auto; display: block;"> If your email is registered with us, 
+				a password reset email will be sent, please follow the instructions on the email to establish a new password. The link will expire in 15 minutes.
+				<br> Please click here to go back to safety: <a href = "/">login page.</a></h1>
+			</div>
+			<div th:case="'usernameSent'" style="margin-left: auto; margin-right: auto; width: 50%;">
+				<img src="/myAssets/images/email-sent.webp" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto; display: block;">
+				<h1 style="text-align: justify; width: 575px; margin-left: auto; margin-right:auto; display: block;"> An email with your username has been sent to 
+				your registered email address.
+				<br> Please click here to go back to safety: <a href = "/">login page</a>.</h1>
+			</div>
+			<div th:case="'userActivated'" style="margin-left: auto; margin-right: auto; width: 50%;">
+				<img src="/myAssets/images/email-sent.webp" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto; display: block;">
+				<h1 style="text-align: justify; width: 575px; margin-left: auto; margin-right:auto; display: block;"> The user has been activated, please
+				follow the link to log in: <a href = "/">login page</a>.</h1>
+			</div>
+			<div th:case="'userCreated'" style="margin-left: auto; margin-right: auto; width: 50%;">
+				<img src="/myAssets/images/email-sent.webp" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto; display: block;">
+				<h1 style="text-align: justify; width: 575px; margin-left: auto; margin-right:auto; display: block;"> The user has been created successfully, please
+				follow the link sent to activate your account. The link will expire in 15 minutes.
+				<br> Please click here to go back to safety: <a href = "/">login page</a>.</h1>
+			</div>
+			<div th:case="'usernameDuplicated'" style="margin-left: auto; margin-right: auto; width: 50%;">
+				<img src="/myAssets/images/invalid_user.png" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto; display: block;">
+				<h1 style="text-align: justify; width: 575px; margin-left: auto; margin-right:auto; display: block;"> The username chosen is already in use, please 
+				select a different one.
+				<br> Please click here to go back to safety: <a href = "/">login page</a>.</h1>
+			</div>
+			<div th:case="'emailDuplicated'" style="margin-left: auto; margin-right: auto; width: 50%;">
+				<img src="/myAssets/images/email.svg" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto; display: block;">
+				<h1 style="text-align: justify; width: 575px; margin-left: auto; margin-right:auto; display: block;"> The email chosen is already in use, please 
+				select a different one.
+				<br> Please click here to go back to safety: <a href = "/">login page</a>.</h1>
+			</div>
+			<div th:case="'creationError'" style="margin-left: auto; margin-right: auto; width: 50%;">
+				<img src="/myAssets/images/cross.png" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto; display: block;">
+				<h1 style="text-align: justify; width: 575px; margin-left: auto; margin-right:auto; display: block;"> The introduced information is not valid.
+				<br> Please click here to go back to safety: <a href = "/">login page</a>.</h1>
+			</div>
+			<div th:case="*">
+				<img src="/myAssets/images/forbiddenAccess.webp" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto; display: block;">
+				<h1 style="text-algin: justify; width: 575px; margin-left: auto; margin-right:auto; display: block;">This access is restricted, only registered users may continue.
+				 If you are already  registered, an action might be required on your side or you might need to contact the administrator.
+				<br> Please click here to go back to safety: <a href = "/">login page</a>.</h1>			
+			</div>
+		</div>
+	</body>
+</html>

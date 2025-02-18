@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form</title>
+</head>
+<body>
+<div style = "display: flex; flex-wrap: wrap;">
+<form th:action="@{/}" method="get" >
+    <button type="submit">Login</button>
+</form>
+<form th:action="@{/Production}" method="get" >
+    <button type="submit">Production</button>
+</form>
+<form th:action="@{/logout}" method="post" >
+    <button type="submit">Sign out</button>
+</form>
+</div>
+
+<h1>Control center</h1>
+<h2> Contact list:</h2>
+<div th:if="${contacts != null}">
+	<ul>
+		<li th:each="contact : ${contacts}">
+			<strong>ID:</strong><span th:text="${contact.id}"></span><br>
+			First name:<span th:text="${contact.firstName}"></span><br>
+			Last name:<span th:text="${contact.lastName}"></span><br>
+			Company:<span th:text="${contact.companyName}"></span><br>
+			Postal code:<span th:text="${contact.postalCode}"></span><br>
+			Address:<span th:text="${contact.address}"></span><br>
+			Telephone number:<span th:text="${contact.phoneNumber}"></span><br>
+		</li>
+	</ul>
+<p th:if="${#lists.isEmpty(contacts)}">No contacts to display currently</p>
+</div>
+
+<h2>Create a contact:</h2>
+<form th:action="@{/Demo/createF}" th:object="${contactFields}" method="post">
+    <div>
+        <label for="firstNameDiv">New first name:</label>
+        <input type="text" id="firstNameDiv" th:field="*{firstName}" />
+        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+    </div>
+     <div>
+        <label for="lastNameDiv">New last name:</label>
+        <input type="text" id="lastNameDiv" th:field="*{lastName}" />
+        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+    </div>
+    <div>
+        <label for="companyDiv">New company:</label>
+        <input type="text" id="companyDiv" th:field="*{companyName}" />
+        <p th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></p>
+    </div>
+    <div>
+        <label for="addressDiv">New address:</label>
+        <input type="text" id="addressDiv" th:field="*{address}" />
+        <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+    </div>
+    <div>
+        <label for="postalCodeDiv">New postal code:</label>
+        <input type="text" id="postalCodeDiv" th:field="*{postalCode}" />
+        <p th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></p>
+    </div>
+    <div>
+        <label for="phoneNumberDiv">New telephone number:</label>
+        <input type="text" id="phoneNumberDiv" th:field="*{phoneNumber}" />
+        <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<h2>Modify a contact:</h2>
+<form th:action="@{/Demo/modifyF}" th:object="${contactFields}" method="post">
+    <div>
+        <label for="modifyIdDiv">ID to modify:</label>
+        <input type="text" id="modifyIdDiv" th:field="*{id}" />
+        <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p>
+    </div>
+    <div>
+        <label for="firstNameModDiv">Updated first name:</label>
+        <input type="text" id="firstNameModDiv" th:field="*{firstName}" />
+        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+    </div>
+     <div>
+        <label for="lastNameModDiv">Updated last name:</label>
+        <input type="text" id="lastNameModDiv" th:field="*{lastName}" />
+        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+    </div>
+    <div>
+        <label for="companyModDiv">Updated company:</label>
+        <input type="text" id="companyModDiv" th:field="*{companyName}" />
+        <p th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></p>
+    </div>
+    <div>
+        <label for="addressModDiv">Updated address:</label>
+        <input type="text" id="addressModDiv" th:field="*{address}" />
+        <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+    </div>
+    <div>
+        <label for="postalCodeModDiv">Updated postal code:</label>
+        <input type="text" id="postalCodeModDiv" th:field="*{postalCode}" />
+        <p th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></p>
+    </div>
+    <div>
+        <label for="phoneNumberModDiv">Updated telephone number:</label>
+        <input type="text" id="phoneNumberModDiv" th:field="*{phoneNumber}" />
+        <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+    </div>
+    <button type="submit">Submit modification</button>
+    
+</form>
+
+<h2>Search for a contact:</h2>
+<form th:action="@{/Demo/searchF}" th:object="${contactFields}" method="post">
+    <div>
+        <label for="searchFirstNameDiv">Search first name:</label>
+        <input type="text" id="searchFirstNameDiv" th:field="*{firstName}" />
+        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+    </div>
+     <div>
+        <label for="searchLastNameDiv">Search last name:</label>
+        <input type="text" id="searchLastNameDiv" th:field="*{lastName}" />
+        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+    </div>
+    <div>
+        <label for="searchCompanyDiv">Search company:</label>
+        <input type="text" id="searchCompanyDiv" th:field="*{companyName}" />
+        <p th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></p>
+    </div>
+    <div>
+        <label for="searchAddressDiv">Search address:</label>
+        <input type="text" id="searchAddressDiv" th:field="*{address}" />
+        <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+    </div>
+    <div>
+        <label for="searchPostalCodeDiv">Search postal code:</label>
+        <input type="text" id="searchPostalCodeDiv" th:field="*{postalCode}" />
+        <p th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></p>
+    </div>
+    <div>
+        <label for="searchPhoneNumberDiv">Search telephone number:</label>
+        <input type="text" id="searchPhoneNumberDiv" th:field="*{phoneNumber}" />
+        <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+    </div>
+    <button type="submit">Search</button>
+    
+</form>
+
+<h2>Delete a contact:</h2>
+<form th:action="@{/Demo/deleteF}" th:object="${contactFields}" method="post">
+    <div>
+        <label for="deleteIdDiv">ID:</label>
+        <input type="text" id="deleteIdDiv" th:field="*{id}" />
+        <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p>
+    </div>
+    <button type="submit">Submit deletion</button>
+</form>
+
+
+
+</body>
+</html>
