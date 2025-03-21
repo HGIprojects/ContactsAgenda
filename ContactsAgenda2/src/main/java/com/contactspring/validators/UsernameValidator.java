@@ -29,6 +29,7 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername, Str
 		boolean isBlank = false;
 
     	if (newUsername == null || newUsername.isEmpty()) {
+			context.disableDefaultConstraintViolation();
     		context.buildConstraintViolationWithTemplate("Must not be empty").addConstraintViolation();
     		isValid = false;
     		isBlank = true;
@@ -38,6 +39,7 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername, Str
     		if (serverFunctioner.lastVisitedPage().equals("loginPage")) {
 				isValid = queryMapper.isUniqueUsernamePro(newUsername);
 	    		if (!isValid) {
+					context.disableDefaultConstraintViolation();
 		    		context.buildConstraintViolationWithTemplate("Username already in use").addConstraintViolation();
 	    		}
     		}
@@ -45,11 +47,13 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername, Str
 			if (serverFunctioner.lastVisitedPage().equals("managementPage") && queryMapper.getProIdFromUsername(newUsername) != null) {   
     			isValid = queryMapper.isUniqueUsernameExceptMePro(newUsername, serverFunctioner.getUserIdToModify());
 	    		if (!isValid) {
+					context.disableDefaultConstraintViolation();
 		    		context.buildConstraintViolationWithTemplate("Username already in use").addConstraintViolation();
 	    		}
     		}
     	
 	    	if (newUsername.length() > 20) {
+				context.disableDefaultConstraintViolation();
 	    		context.buildConstraintViolationWithTemplate("Max. 20 characters").addConstraintViolation();
 	    		isValid = false;
 	    	}
