@@ -32,6 +32,9 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
     	boolean isBlank = false;    	
 
     	if (newEmail == null || newEmail.isEmpty()) {
+		
+			context.disableDefaultConstraintViolation();
+
 			context.buildConstraintViolationWithTemplate("Must not be empty").addConstraintViolation();
 			isValid = false;
 			isBlank = true;
@@ -42,6 +45,7 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
     		if (serverFunctioner.lastVisitedPage().equals("loginPage")) {
     			isValid = queryMapper.isUniqueEmailPro(newEmail);
 	    		if (!isValid) {
+	    			context.disableDefaultConstraintViolation();
 		    		context.buildConstraintViolationWithTemplate("Email already in use").addConstraintViolation();
 	    		}
     		}
@@ -49,16 +53,19 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
     		if (serverFunctioner.lastVisitedPage().equals("managementPage") && queryMapper.getProIdFromEmail(newEmail) != null) {   
 	    		isValid = queryMapper.isUniqueEmailExceptMePro(newEmail, serverFunctioner.getUserIdToModify());
 	    		if (!isValid) {
+	    			context.disableDefaultConstraintViolation();
 		    		context.buildConstraintViolationWithTemplate("Email already in use").addConstraintViolation();
 	    		}
     		}
 	    	
 	    	if (newEmail.length() > 50) {
+				context.disableDefaultConstraintViolation();
 	    		context.buildConstraintViolationWithTemplate("Max. 50 characters").addConstraintViolation();
 	    		isValid = false;
 	    	}
 	    	
 	    	if (!EMAIL_PATTERN.matcher(newEmail).matches()) {
+				context.disableDefaultConstraintViolation();
 	    		context.buildConstraintViolationWithTemplate("Must be a valid email").addConstraintViolation();
 	    		isValid = false;
 	    	}
