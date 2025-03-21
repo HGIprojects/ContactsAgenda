@@ -29,6 +29,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
     	boolean isBlank = false;
    	
     	if (password == null || password.isEmpty()) {
+			context.disableDefaultConstraintViolation();
     		context.buildConstraintViolationWithTemplate("Must not be empty").addConstraintViolation();
     		isValid = false;
     		isBlank = true;
@@ -37,26 +38,31 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
     	if (!isBlank) {
 			
 			if (password.length() < 10) {
+				context.disableDefaultConstraintViolation();
 	    		context.buildConstraintViolationWithTemplate("Min. 10 characters").addConstraintViolation();
 	    		isValid = false;
 	    	}
 	    	
 	    	if (!UPPERCASE.matcher(password).matches()) {
+				context.disableDefaultConstraintViolation();
 	    		context.buildConstraintViolationWithTemplate("Must have an uppercase letter").addConstraintViolation();
 	    		isValid = false;
 	    	}
 	    	
 	    	if (!LOWERCASE.matcher(password).matches()) {
+				context.disableDefaultConstraintViolation();
 	    		context.buildConstraintViolationWithTemplate("Must have a lowercase letter").addConstraintViolation();
 	    		isValid = false;
 	    	}
 	    	
 	    	if (!DIGIT.matcher(password).matches()) {
+				context.disableDefaultConstraintViolation();
 	    		context.buildConstraintViolationWithTemplate("Must have a number").addConstraintViolation();
 	    		isValid = false;
 	    	}
 	    	
 	    	if (!PUNCTUATION.matcher(password).matches()) {
+				context.disableDefaultConstraintViolation();
 	    		context.buildConstraintViolationWithTemplate("Must have a punctuation sign").addConstraintViolation();
 	    		isValid = false;
 	    	}
