@@ -6,9 +6,7 @@ import com.contactspring.annotations.ValidPassword;
 import com.contactspring.annotations.ValidUsername;
 import com.contactspring.mybatis.generate.model.UserSecurity;
 
-import lombok.Data;
-
-@Data
+//@Data
 public class ValidatedUserSecurity extends UserSecurity implements Serializable{
 
 	@ValidUsername
@@ -17,4 +15,22 @@ public class ValidatedUserSecurity extends UserSecurity implements Serializable{
     @ValidPassword
     private String password;
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+    
+    
 }
