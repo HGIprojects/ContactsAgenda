@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Result</title>
+</head>
+<body>
+<h1>Submission Result</h1>
+<p th:text="${message}"></p>
+
+<p th:if="${resultType == 'creation'}">Contact created successfully</p> 
+<p th:if="${resultType == 'modification'}">Contact updated successfully</p> 
+<p th:if="${resultType == 'deletion'}">Contact deleted successfully</p>
+<p th:if="${resultType == 'search'}">Search results:</p>
+<div th:if="${resultType == 'creation'}">
+	<h2>New contact details:</h2>
+	<p><strong>First name:</strong><span th:text="${contact.firstName}"></span></p>
+	<p><strong>Last name:</strong><span th:text="${contact.lastName}"></span></p>
+	<p><strong>Company name:</strong><span th:text="${contact.companyName}"></span></p>
+	<p><strong>Postal code:</strong><span th:text="${contact.postalCode}"></span></p>
+	<p><strong>Address:</strong><span th:text="${contact.address}"></span></p>
+	<p><strong>Telephone:</strong><span th:text="${contact.phoneNumber}"></span></p>
+</div>
+<div th:if="${resultType == 'modification'}">
+	<h2>Old contact details:</h2>
+	<p><strong>First name:</strong><span th:text="${oldContact.firstName}"></span></p>
+	<p><strong>Last name:</strong><span th:text="${oldContact.lastName}"></span></p>
+	<p><strong>Company name:</strong><span th:text="${oldContact.companyName}"></span></p>
+	<p><strong>Postal code:</strong><span th:text="${oldContact.postalCode}"></span></p>
+	<p><strong>Address:</strong><span th:text="${oldContact.address}"></span></p>
+	<p><strong>Telephone:</strong><span th:text="${oldContact.phoneNumber}"></span></p>
+	
+	<h2>New contact details:</h2>
+	<p><strong>First name:</strong><span th:text="${newContact.firstName}"></span></p>
+	<p><strong>Last name:</strong><span th:text="${newContact.lastName}"></span></p>
+	<p><strong>Company name:</strong><span th:text="${newContact.companyName}"></span></p>
+	<p><strong>Postal code:</strong><span th:text="${newContact.postalCode}"></span></p>
+	<p><strong>Address:</strong><span th:text="${newContact.address}"></span></p>
+	<p><strong>Telephone:</strong><span th:text="${newContact.phoneNumber}"></span></p>
+</div>
+<div th:if="${resultType == 'search'}">
+	<div th:if="${searchResult != null}">
+		<ul>
+			<li th:each="contact : ${searchResult}">
+				<strong>ID:</strong><span th:text="${contact.id}"></span><br>
+				First name:<span th:text="${contact.firstName}"></span><br>
+				Last name:<span th:text="${contact.lastName}"></span><br>
+				Company:<span th:text="${contact.companyName}"></span><br>
+				Postal code:<span th:text="${contact.postalCode}"></span><br>
+				Address:<span th:text="${contact.address}"></span><br>
+				Telephone number:<span th:text="${contact.phoneNumber}"></span><br>
+			</li>
+		</ul>
+	<p th:if="${#lists.isEmpty(searchResult)}">No contacts to display currently</p>
+	</div>
+</div>
+<button onclick="window.location.href='http://localhost:8080/Demo'">Go back</button>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+  <head>
+	<script src="/assets/js/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>Neutral Software's Contact dashboard</title>
+	<link rel="stylesheet" href="/myAssets/myCSS/myAgendaCSS.css">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+	<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css}" rel="stylesheet">
+    <link th:href="@{/dashboard.css}" rel="stylesheet">
+  </head>
+  <style></style>
+  <body>
+	<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+	  <symbol id="file-earmark" viewBox="0 0 16 16">
+		<path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+	  </symbol>
+	  <symbol id="house-fill" viewBox="0 0 16 16">
+		<path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+		<path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+	  </symbol>
+	</svg>
+	<header class="navbar bg-dark flex-md-nowrap p-0 shadow minWidthAllowed" data-bs-theme="dark">
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" th:href="@{/Production}">
+			<img src = "/myAssets/images/Picture1.png" alt = " Neutral Software company logo">
+		</a>
+		<ul class="navbar-nav flex-row d-md-none">
+			<li class="nav-item text-nowrap">
+				<button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="bi-list fillTeal" viewBox="0 0 16 16">
+  						<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+					</svg>				
+				</button>
+			</li>
+		</ul>
+		<div id="navbarSearch" class="navbar-search w-100 collapse">
+			<input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+		</div>
+	</header>
+	<div class="container-fluid minWidthAllowed maxWidthAllowed">
+		<div class="row">
+			<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+			  <div class="offcanvas-md offcanvas-start bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+				<div class="offcanvas-header">
+				  <h5 class="offcanvas-title" id="sidebarMenuLabel"> Available options </h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+				</div>
+				<div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+				  <ul class="nav flex-column">
+					<li class="nav-item">
+					  <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" style = "color: #008579" href="http://localhost:8080/Management">
+						<svg class="bi"><use xlink:href="#house-fill"/></svg>
+						Home
+					  </a>
+					</li>
+					<hr class="my-3">
+					<li>
+					<form th:action="@{/Demo}" method="get">
+				    	<button type="submit" class="nav-link d-flex align-items-center gap-2" style = "cursor: pointer; color: #008579">Switch to demo</button>
+					</form>
+					</li>
+					<li>
+					<form th:action="@{/logout}" method="post">
+				    	<button type="submit" class="nav-link d-flex align-items-center gap-2" style = "cursor: pointer; color: #008579">Sign out</button>
+					</form>
+					</li>
+					<li>
+						<form th:action = "@{/Production}" method = "get">
+					    	<button type="submit" class="nav-link d-flex align-items-center gap-2" style = "cursor: pointer; color: #008579"> Manage contacts </button>
+						</form>
+					</li>
+				  </ul>
+				  <hr class="my-3">
+				</div>
+			  </div>
+			</div>
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-2" id = "mainContainer">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id = "bigDiv">
+					<h1 class="h2" id = "pageTitle" th:text="'Welcome back, ' + ${username}"> Welcome back to the contacts agenda </h1>
+				</div>
+				<div id = "bigContainer">
+					<div id = "searchContainer" class = "tealBackGround">
+						<form th:action = "@{/Management/searchUserF}" th:object = "${userInfo}" method = "post">
+							<h2> Search fields </h2>
+							<div id="columnsContainer" class = "columnContainerStyle">					
+								<div id="formContainerLeft" class = "wrapAround">																	
+									<ul id="usernameLabelList" class="labelList">
+										<li id="usernameLabelLi" class = "tinyMargin">
+											<label id="labelUsername" for = "usernameDetailsSearch" class="labelStyle"> Username </label>
+										</li>
+									</ul>
+									<ul id="usernameInputLabel" class="inputList">
+										<li id="usernameInputLi" class = "smallMargin">
+											<input id="usernameDetailsSearch" class="inputStyle textBoxWidth" type="text" placeholder="Enter username" th:field="*{username}">
+										</li>
+									</ul>
+									<ul id="emailLabelList" class="labelList">
+										<li id="emailLabelLi" class = "tinyMargin">
+											<label id="labelEmail" class="labelStyle"> Email </label>
+										</li>
+									</ul>
+									<ul id="emailInputLabel" class="inputList">
+										<li id="emailInputLi" class = "smallMargin">
+											<input id="emailDetailsSearch" class="inputStyle textBoxWidth" type="text" placeholder="Enter email" th:field="*{email}">
+										</li>
+									</ul>
+									<ul id="roleLabelList" class="labelList">
+										<li id="roleLableLi" class = "tinyMargin">
+											<label id="labelRole" class="labelStyle"> Role </label>
+										</li>
+									</ul>
+									<ul id="roleInputLabel" class="inputList">
+										<li id="roleInputLi" class = "smallMargin">
+											<select id="roleDetailsSearch" class="inputStyle textBoxWidth" th:field="*{roleId}">
+												<option value="0"> Empty </option>
+												<option value="1"> PRODUCTION </option>
+												<option value="2"> DEMO </option>
+												<option value="3"> ADMIN </option>
+											</select>
+										</li>
+									</ul>
+								</div>
+								<div id="formContainerRight" class = "containerStyle2">
+									<ul id = "activeLabelList" class = "labelList">
+										<li id = "activeLabelLi" class = "tinyMargin">
+											<label id = "labelActive" for = "activeDetails" class = "labelStyle"> Active </label>
+										</li>
+									</ul>									
+									<ul id = "activeInputLabel" class = "inputList">
+										<li id = "activeInputLi" class = "smallMargin">
+											<select id="activeDetails" class="inputStyle textBoxWidth" th:field="*{active}">
+												<option value="false"> False </option>
+												<option value="true"> True </option>													
+											</select>
+										</li>
+									</ul>
+								</div>
+							</div>							
+							<div class = "buttonMarginSearch" style = "display: flex; flex-wrap: wrap;">
+								<button type = "submit" id = "searchButton" class = "btn  custom-btn"> Search </button>
+								<button id = "clearButton" type = "button" class = "btn  custom-btn" onclick = "clearAllText()"> Clear </button>
+							</div>
+						</form>
+					</div>
+					<div id = "shortUserContainer" th:if="${!searchUser}">
+						<div class="table-responsive small listContainer" id="listContainer" style = "margin-top: 50px">
+							<table class="table table-striped table-sm" id = "columnsHeader">
+								<thead>
+									<tr>
+										<th scope="col">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-standing-dress" viewBox="0 0 16 16">
+											  <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.5 12.25V12h1v3.25a.75.75 0 0 0 1.5 0V12h1l-1-5v-.215a.285.285 0 0 1 .56-.078l.793 2.777a.711.711 0 1 0 1.364-.405l-1.065-3.461A3 3 0 0 0 8.784 3.5H7.216a3 3 0 0 0-2.868 2.118L3.283 9.079a.711.711 0 1 0 1.365.405l.793-2.777a.285.285 0 0 1 .56.078V7l-1 5h1v3.25a.75.75 0 0 0 1.5 0Z"/>
+											</svg>
+											Username
+										</th>
+										<th scope="col">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
+												<path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671"/>
+												<path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791"/>
+											</svg>
+											Email
+										</th>
+										<th scope="col">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3-fill" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zm-6 8A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm6 0A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm6 0a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5z"/>
+											</svg>
+											Role
+										</th>
+										<th scope="col">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style = "margin-left: 25px;" fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+											  <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z"/>
+											</svg>
+											Tools
+										</th>
+									</tr>
+								</thead>
+								<tbody id = "shortUserInfoList">
+									<tr th:each="user : ${users}" th:data-username="${user.username}" th:data-email="${user.email}" th:data-role="${user.roleName}">
+										<td th:text="${user.username}"></td>
+										<td th:text="${user.email}"></td>
+										<td th:text="${user.roleName}"></td>
+										<td style = "display: flex; wrap: flex-wrap;">
+											<form th:action="@{/Management/viewUserF}" method="post">
+												<input type="hidden" name="id" th:value="${user.id}" />
+												<input type="hidden" name="action" value="viewUser" />
+												<button type="submit" class = "btn  custom-btn"> View </button>
+											</form>											
+											<form th:action="@{/Management/deleteUserF}" method="post" th:id="'deleteForm-' + ${user.id}">
+												<div th:id="'deletionConfirmDialog-' + ${user.id}" class="confirm-dialog invisibleElement">
+													<div class="confirm-content">
+														<p th:text = "'Please confirm deletion of ' + ${user.username}"></p>
+														<div class="confirm-buttons">
+															<input type="hidden" name="id" th:value="${user.id}" />
+															<input type="hidden" name="action" value="deleteUserInfo" />
+															<button type="button" th:onclick="confirmUserDeletion([[${user.id}]])" class = "btn  custom-btn"> Confirm </button>
+															<button type="button" th:onclick="cancelUserDeletion([[${user.id}]])" class = "btn  custom-btn"> Cancel </button>
+														</div>
+													</div>
+												</div>
+												<button type="button" class="btn  custom-btn" th:onclick="showUserDeletionConfirmDialog([[${user.id}]])"> Delete </button>
+											</form>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>	
+						<div id = "paginationContainer">
+							<div class="pagination">
+								<a id="first-page" class="custom-btn" th:href="@{/Management}" style = "text-decoration: none;">&lt&lt</a>
+								<a id="prev-page" class="custom-btn" th:href = "'/Management/navigate?page=' + ${previousPage}" style = "text-decoration: none;">&lt</a>
+								<div th:each = "pageNumber : ${#numbers.sequence(1, totalPages)}">
+									<a class = "pageNumberButtons custom-btn" th:text = "${pageNumber}" th:href = "'/Management/navigate?page=' + ${pageNumber}" style = "text-decoration: none;"></a>
+								</div>
+								<a id="next-page" class="custom-btn" width="300px" th:href = "'/Management/navigate?page=' + ${nextPage}" style = "text-decoration: none;">&gt</a>
+								<a id="last-page" class="custom-btn" th:href = "'/Management/navigate?page=' + ${totalPages}" style = "text-decoration: none;">&gt&gt</a>
+							</div>
+						</div>
+					</div>							
+					<div id = "searchResultContainer" th:if="${searchUser}">
+						<div class="table-responsive small listContainer" id="resultListContainer" style = "margin-top: 50px">
+							<table class="table table-striped table-sm" id = "resultColumnsHeader">
+								<thead>
+									<tr>
+										<th scope="col">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-standing-dress" viewBox="0 0 16 16">
+											  <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.5 12.25V12h1v3.25a.75.75 0 0 0 1.5 0V12h1l-1-5v-.215a.285.285 0 0 1 .56-.078l.793 2.777a.711.711 0 1 0 1.364-.405l-1.065-3.461A3 3 0 0 0 8.784 3.5H7.216a3 3 0 0 0-2.868 2.118L3.283 9.079a.711.711 0 1 0 1.365.405l.793-2.777a.285.285 0 0 1 .56.078V7l-1 5h1v3.25a.75.75 0 0 0 1.5 0Z"/>
+											</svg>
+											Username
+										</th>
+										<th scope="col">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
+												<path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671"/>
+												<path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791"/>
+											</svg>
+											Email
+										</th>
+										<th scope="col">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3-fill" viewBox="0 0 16 16">
+												<path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zm-6 8A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm6 0A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm6 0a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5z"/>
+											</svg>
+											Role
+										</th>
+										<th scope="col">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style = "margin-left: 25px;" fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+											  <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z"/>
+											</svg>
+											Tools
+										</th>
+									</tr>
+								</thead>
+								<tbody id = "searchResultUserInfoList">
+									<tr th:each="user : ${searchResult}" th:data-username="${user.username}" th:data-email="${user.email}" th:data-role="${user.roleName}">
+										<td th:text="${user.username}"></td>
+										<td th:text="${user.email}"></td>
+										<td th:text="${user.roleName}"></td>
+										<td style = "display: flex; wrap: flex-wrap;">
+											<form th:action="@{/Management/viewUserF}" method="post">
+												<input type="hidden" name="id" th:value="${user.id}" />
+												<input type="hidden" name="action" value="viewUser" />
+												<button type="submit" class = "btn  custom-btn"> View </button>
+											</form>																			
+											<form th:action="@{/Management/deleteUserF}" method="post" th:id="'deleteForm-' + ${user.id}">
+												<div th:id="'deletionConfirmDialog-' + ${user.id}" class="confirm-dialog invisibleElement">
+													<div class="confirm-content">
+														<p th:text = "'Please confirm deletion of ' + ${user.username}"></p>
+														<div class="confirm-buttons">
+															<input type="hidden" name="id" th:value="${user.id}" />
+															<input type="hidden" name="action" value="deleteUserInfo" />
+															<button type="button" th:onclick="confirmUserDeletion([[${user.id}]])" class = "btn  custom-btn"> Confirm </button>
+															<button type="button" th:onclick="cancelUserDeletion([[${user.id}]])" class = "btn  custom-btn"> Cancel </button>
+														</div>
+													</div>
+												</div>
+												<button type="button" class="btn  custom-btn" th:onclick="showUserDeletionConfirmDialog([[${user.id}]])"> Delete </button>
+											</form>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>	
+					</div>			
+				</div>
+			</main>	
+		</div>
+	</div> 
+
+	<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/myAssets/myJS/usefulScripts.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
+  </body>
+</html>

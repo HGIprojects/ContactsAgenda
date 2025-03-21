@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Logon</title>
+   	<link rel="stylesheet" th:href="@{/myAssets/myCSS/myAgendaCSS.css}">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+	<link th:href="@{/assets/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css}" rel="stylesheet">
+<!--    <link th:href="@{/dashboard.css}" rel="stylesheet"> -->
+</head>
+<body style="background-color:#e9ecef;">
+<div class="centeredContainer">
+<div class="center">
+	<a th:href="@{/}">
+		<img src = "/myAssets/images/Picture1.png" alt = " Neutral Software company logo" style="margin-right:50px;">
+	</a>
+	<div th:if="${!passwordChange}" style="margin: 15px 0px 15px 15px;">
+		<div style = "display: flex;">
+			<form th:action="@{/}" method="post" id="loginForm" style="margin-right: 5px;" sec:authorize="!isAuthenticated()">
+			    <input type="text" name="username" placeholder="Username" required />
+			    <input type="password" name="password" placeholder="Password" required />
+			</form>
+			<button form="loginForm" type="submit" class="btn custom-btn" sec:authorize="!isAuthenticated()"> Sign in </button>
+		</div>
+		<div style="display:flex; margin-top: 5px;">
+			<form th:action="@{/newUserF}" th:object="${userModel}" method="post" id="newUserForm">
+				<div id="createUserDialog" class="confirm-dialog invisibleElement">
+					<div class="confirm-content">
+						<p> Please enter your username, password, email and role: </p>
+						<div class="confirm-buttons" style="display:flex;">
+							<div id="userInput" class="textBoxWidth">	
+								<input th:if="${newUser}" id="newUsernameDetails" name="newUsername" class="inputStyle textBoxWidth" type="text" th:field="*{validatedUserSecurity.username}">
+								<input th:unless="${newUser}" id="newUsernameDetailsNoError" name="newUsername" class="inputStyle textBoxWidth" type="text" placeholder="Enter a username" th:field="*{validatedUserSecurity.username}">
+								<div th:if="${#fields.hasErrors('validatedUserSecurity.username')}" th:each="err1 : ${#fields.errors('validatedUserSecurity.username')}" style="color: red;">
+								    <span th:text="${err1}"></span>
+								</div>							
+							</div>
+							<div id="passwordInput" class="textBoxWidth">
+								<input th:if="${newUser}" id="newPasswordDetails" name="newPassword" class="inputStyle textBoxWidth" type="password" th:field="*{validatedUserSecurity.password}">
+								<input th:unless="${newUser}" id="newPasswordDetailsNoError" name="newPassword" class="inputStyle textBoxWidth" type="password" placeholder="Enter a password" th:field="*{validatedUserSecurity.password}" autocomplete="off">
+								<div th:if="${#fields.hasErrors('validatedUserSecurity.password')}" th:each="err2 : ${#fields.errors('validatedUserSecurity.password')}" style="color: red;">
+								    <span th:text="${err2}"></span>
+								</div>
+		                    </div>
+							<div id="emailInput" class="textBoxWidth">	
+								<input th:if="${newUser}" id="newEmailDetails" name="newEmail" class="inputStyle textBoxWidth" type="text" th:field="*{validatedUserProperties.email}">
+								<input th:unless="${newUser}" id="newEmailDetailsNoError" name="newEmail" class="inputStyle textBoxWidth" type="text" placeholder="Enter an email" th:field="*{validatedUserProperties.email}" autocomplete="off">
+								<div th:if="${#fields.hasErrors('validatedUserProperties.email')}" th:each="err3 : ${#fields.errors('validatedUserProperties.email')}" style="color: red;">
+								    <span th:text="${err3}"></span>
+								</div>							</div>
+							<button type="button" onclick="confirmCreation()" class = "btn custom-btn"> Register </button>
+							<button type="button" onclick="cancelCreation()" class = "btn custom-btn"> Cancel </button>
+						</div>
+					</div>
+				</div>
+				<button type="button" class="btn custom-btn" onclick="showCreationDialog()" sec:authorize="!isAuthenticated()"> Create new user </button>
+			</form>
+			<form th:action="@{/forgottenPasswordF}" th:object="${forgottenPassword}" method="post" id="forgottenPasswordForm">
+				<div id="forgottenPasswordDialog" class="confirm-dialog invisibleElement">
+					<div class="confirm-content">
+						<p> Please enter your email, a password reset link will be sent: </p>
+						<div class="confirm-buttons" style="display:flex;">
+					<!--		<input type="email" name="emailForPassword" placeholder = "Enter your email" th:value="*{email}" required autocomplete="off"/> 
+					-->
+							<div id="forgottenPasswordInput" class="textBoxWidth">	
+								<input th:if="${forgotPassword}" id="forgotPasswordDetails" name="emailForPassword" class="inputStyle textBoxWidth" type="text" th:field="*{email}">
+								<input th:unless="${forgotPassword}" id="forgotPasswordDetailsNoError" name="emailForPassword" class="inputStyle textBoxWidth" type="text" placeholder="Enter an email" th:field="*{email}" autocomplete="off">
+								<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></div>
+							</div>
+							<button type="button" onclick="confirmReset()" class = "btn custom-btn"> Enter </button>
+							<button type="button" onclick="cancelReset()" class = "btn custom-btn"> Cancel </button>
+						</div>
+					</div>
+				</div>
+				<button type="button" class="btn custom-btn" onclick="showResetDialog()" sec:authorize="!isAuthenticated()"> Forgot my password </button>
+			</form>
+			<form th:action="@{/logout}" method="post" style="margin-bottom: 15px;" sec:authorize="isAuthenticated()">
+		    	<button type="submit" class="btn custom-btn">Sign out</button>
+			</form>
+			<form th:action="@{/forgottenUsernameF}" th:object="${forgottenUser}" method="get" id="forgottenUsernameForm">
+				<div id="forgottenUsernameDialog" class="confirm-dialog invisibleElement">
+					<div class="confirm-content">
+						<p> Please enter your email, your username information will be sent: </p>
+						<div class="confirm-buttons" style="display:flex;">
+					<!--	<input type="email" style="width: 250px;" name="emailForUsername" placeholder = "Enter your email" th:value="*{email}" required autocomplete="off"/> 
+					-->
+							<div id="forgottenUserInput" class="textBoxWidth">
+								<input th:if="${forgotUser}" id="forgotUserDetails" name="emailForUsername" class="inputStyle textBoxWidth" type="text" th:field="*{email}">
+								<input th:unless="${forgotUser}" id="forgotUserDetailsNoError" name="emailForUsername" class="inputStyle textBoxWidth" type="text" placeholder="Enter an email" th:field="*{email}" autocomplete="off">
+								<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></div>
+							</div>
+							<button type="button" onclick="confirmForgotten()" class = "btn custom-btn"> Enter </button>
+							<button type="button" onclick="cancelForgotten()" class = "btn custom-btn"> Cancel </button>
+						</div>
+					</div>
+				</div>
+				<button type="button" class="btn custom-btn" onclick="showForgottenDialog()" sec:authorize="!isAuthenticated()"> Forgot my username </button>
+			</form>
+		</div>	
+	</div>
+	<div th:if="${passwordChange}" style="display:flex;">
+		<form name="setPasswordForm" th:object="${secUser}" th:action="@{/setNewPassword}" method="post" th:id="'setPasswordForm-' + ${secUser.id}">
+			<input type="password" placeholder="Enter new password" name="passwordToReset" th:value="*{password}" />
+			<input type="hidden" name="id" th:value="${secUser.id}" />
+			<input type="hidden" name="action" value="secUser" />
+		    <button type="submit" class="btn custom-btn"> Update password </button>
+		</form>
+	</div>
+</div>
+</div>
+<div th:if="${newUser}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+		function errorTriggersDialog1() {
+			const dialog = document.getElementById("createUserDialog");
+            console.log("Condition met, error creating a new user, executing script!");
+			if (dialog) {
+				dialog.style.display = "flex";
+			} else {
+				console.error("Something happened when creating a dialog");
+			}
+		}
+		errorTriggersDialog1();
+        /*]]>*/
+    </script>
+</div>
+<div th:if="${forgotPassword}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+		function errorTriggersDialog2() {
+			const dialog = document.getElementById("forgottenPasswordDialog");
+            console.log("Condition met, executing, error remembering the password, script!");
+			if (dialog) {
+				dialog.style.display = "flex";
+			} else {
+				console.error("Something happened when creating a dialog");
+			}
+		}
+		errorTriggersDialog2();
+        /*]]>*/
+    </script>
+</div>
+<div th:if="${forgotUser}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+		function errorTriggersDialog3() {
+			const dialog = document.getElementById("forgottenUsernameDialog");
+            console.log("Condition met, error remembering the username, executing script!");
+			if (dialog) {
+				dialog.style.display = "flex";
+			} else {
+				console.error("Something happened when creating a dialog");
+			}
+		}
+		errorTriggersDialog3();
+        /*]]>*/
+    </script>
+</div>
+<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/myAssets/myJS/usefulScripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+  <head>
+	<script src="/assets/js/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>Neutral Software's Contact dashboard</title>
+	<link rel="stylesheet" href="/myAssets/myCSS/myAgendaCSS.css">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+	<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css}" rel="stylesheet">
+    <link th:href="@{/dashboard.css}" rel="stylesheet">
+  </head>
+  <style></style>
+  <body>
+	<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+	  <symbol id="file-earmark" viewBox="0 0 16 16">
+		<path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+	  </symbol>
+	  <symbol id="house-fill" viewBox="0 0 16 16">
+		<path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+		<path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+	  </symbol>
+	</svg>
+	<header class="navbar bg-dark flex-md-nowrap p-0 shadow minWidthAllowed" data-bs-theme="dark">
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" th:href="@{/Production}">
+			<img src = "/myAssets/images/Picture1.png" alt = " Neutral Software company logo">
+		</a>
+		<ul class="navbar-nav flex-row d-md-none">
+			<li class="nav-item text-nowrap">
+				<button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="bi-list fillTeal" viewBox="0 0 16 16">
+  						<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+					</svg>				
+				</button>
+			</li>
+		</ul>
+		<div id="navbarSearch" class="navbar-search w-100 collapse">
+			<input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+		</div>
+	</header>
+	<div class="container-fluid minWidthAllowed maxWidthAllowed">
+		<div class="row">
+			<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+			  <div class="offcanvas-md offcanvas-start bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+				<div class="offcanvas-header">
+				  <h5 class="offcanvas-title" id="sidebarMenuLabel"> Available options </h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+				</div>
+				<div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+				  <ul class="nav flex-column">
+					<li class="nav-item">
+					  <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" style = "color: #008579" href="http://localhost:8080/Management">
+						<svg class="bi"><use xlink:href="#house-fill"/></svg>
+						Home
+					  </a>
+					</li>
+					<hr class="my-3">
+					<li>
+					<form th:action="@{/Demo}" method="get">
+				    	<button type="submit" class="nav-link d-flex align-items-center gap-2" style = "cursor: pointer; color: #008579">Switch to demo</button>
+					</form>
+					</li>
+					<li>
+					<form th:action="@{/logout}" method="post">
+				    	<button type="submit" class="nav-link d-flex align-items-center gap-2" style = "cursor: pointer; color: #008579">Sign out</button>
+					</form>
+					</li>
+					<li>
+						<form th:if="${#lists.isEmpty(authRole.?[authority == 'ROLE_ADMIN']) == false}" th:action = "@{/Production}" method = "get">
+					    	<button type="submit" class="nav-link d-flex align-items-center gap-2" style = "cursor: pointer; color: #008579"> Manage contacts </button>
+						</form>
+					</li>
+				  </ul>
+				  <hr class="my-3">
+				</div>
+			  </div>
+			</div>
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-2" id = "mainContainer">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id = "bigDiv">
+					<h1 class="h2" id = "pageTitle" th:text="'Welcome back, ' + ${username}"> Welcome back to the contacts agenda </h1>
+				</div>
+				<div id = "bigContainer">
+					<div id = "viewContainer" class = "tealBackGround" style="display: flex; flex-direction: column; gap: 20px;">
+						<form th:action = "@{/Management/updateUserF}" th:object = "${selectedUser}" method = "post" th:id="'modifyForm-' + ${selectedUser.id}" name = "modificationForm">
+						<h2 th:text = "${titleUsername + ', ' + titleEmail}"></h2>
+							<input type = "hidden" id = "idDetail" th:value = "*{id}" th:field = "*{id}">
+							<div id = "columnsContainer" class ="columnContainerStyle" style = "margin-bottom: 50px;">
+								<div id = "formContainerLeft" class = "wrapAround">
+									<ul id = "usernameLabelList" class = "labelList">
+										<li id = "usernameLabelLi" class = "tinyMargin">
+											<label id="labelUsername" for = "usernameCodeDetails" class="labelStyle"> Username </label>
+										</li>
+									</ul>
+									<ul id = "usernameInputLabel" class = "inputList">
+										<li id = "usernameInputLi" class = "smallMargin">
+											<div th:if = "${viewUser}">
+												<input id = "usernameDetails" class = "inputStyle textBoxWidth" type = "text" th:value="*{username}" readonly = "readonly">
+											</div>										
+											<div th:if = "${modifyUser}">
+												<input id = "usernameDetails" class = "inputStyle textBoxWidth" type = "text" th:value="*{username}" th:field="*{username}" required autocomplete="off">
+											</div>
+											<div th:if="${#fields.hasErrors('username')}" th:each="err1 : ${#fields.errors('username')}" style="color: red;">
+											    <span th:text="${err1}"></span>
+											</div>	
+										</li>
+									</ul>								
+									<ul id = "emailLabelList" class = "labelList">
+										<li id = "emailLabelLi" class = "tinyMargin">
+											<label id = "labelEmail" for = "emailDetails" class = "labelStyle"> Email </label>
+										</li>
+									</ul>
+									<ul id = "emailInputLabel" class = "inputList">
+										<li id = "emailInputLi" class = "smallMargin">
+											<div th:if = "${viewUser}">
+												<input id = "emailDetails" class = "inputStyle textBoxWidth" type = "text" th:value="*{email}" readonly = "readonly">
+											</div>										
+											<div th:if = "${modifyUser}">
+												<input id = "emailDetails" class = "inputStyle textBoxWidth" type = "text" th:value="*{email}" th:field="*{email}" required autocomplete="off">
+											</div>
+											<div th:if="${#fields.hasErrors('email')}" th:each="err1 : ${#fields.errors('email')}" style="color: red;">
+											    <span th:text="${err1}"></span>
+											</div>
+										</li>
+									</ul>								
+									<ul id = "roleLabelList" class = "labelList">
+										<li id = "roleLabelLi" class = "tinyMargin">
+											<label id = "labelRole" for = "roleDetails" class = "labelStyle"> Role </label>
+										</li>
+									</ul>
+									<ul id = "roleInputLabel" class = "inputList">
+										<li id = "roleInputLi" class = "smallMargin">
+											<div th:if = "${viewUser}">
+												<select id="roleDetails" class="inputStyle textBoxWidth" th:field="*{roleId}" disabled>
+													<option value="0"> Empty </option>
+													<option value="1"> PRODUCTION </option>
+													<option value="2"> DEMO </option>
+													<option value="3"> ADMIN </option>
+												</select>
+											</div>										
+											<div th:if = "${modifyUser}">
+												<select id="roleDetails" class="inputStyle textBoxWidth" th:field="*{roleId}">
+													<option value="0"> Empty </option>
+													<option value="1"> PRODUCTION </option>
+													<option value="2"> DEMO </option>
+													<option value="3"> ADMIN </option>
+												</select>
+											</div>		
+										</li>
+									</ul>
+								</div>
+								<div id = "formContainerRight" class = "containerStyle2">
+									<ul id = "activeLabelList" class = "labelList">
+										<li id = "activeLabelLi" class = "tinyMargin">
+											<label id = "labelActive" for = "activeDetails" class = "labelStyle"> Active </label>
+										</li>
+									</ul>									
+									<ul id = "activeInputLabel" class = "inputList">
+										<li id = "activeInputLi" class = "smallMargin">
+											<div th:if = "${viewUser}">
+												<select id="activeDetails" class="inputStyle textBoxWidth" th:field="*{active}" disabled>
+													<option value="false"> False </option>
+													<option value="true"> True </option>													
+												</select>
+											</div>										
+											<div th:if = "${modifyUser}">
+												<select id="activeDetails" class="inputStyle textBoxWidth" th:field="*{active}">
+													<option value="false"> False </option>
+													<option value="true"> True </option>													
+												</select>											
+											</div>		
+										</li>
+									</ul> 
+									<ul id = "resetLabelList" class = "labelList">
+										<li id = "resetLabelLi" class = "tinyMargin">
+											<label id = "resetLabel" for = "resetDetails" class = "labelStyle"> Reset password </label>
+										</li>
+									</ul>							
+									<ul id = "resetInputLabel" class = "inputList">
+										<li id = "resetInputLi" class = "smallMargin">
+											<div th:if = "${viewUser}">
+												<button type="button" class="btn  custom-btn" id="resetDetails" disabled> Send </button>											
+											</div>										
+											<div th:if = "${modifyUser}">
+												<button type="button" th:onclick="showPasswordResetDialog([[${selectedUser.id}]])" class="btn  custom-btn" id="resetDetails"> Send </button>											
+											</div>		
+										</li>
+									</ul>
+									<ul id = "activationLabelList" class = "labelList">
+										<li id = "activationLabelLi" class = "tinyMargin">
+											<label id = "activationLabel" for = "activationDetails" class = "labelStyle" style="width: 200px;"> Resend activation code </label>
+										</li>
+									</ul>	
+									<ul id = "activationInputLabel" class = "inputList">
+										<li id = "activationInputLi" class = "smallMargin">
+											<div th:if = "${viewUser}">
+												<button type="button" class="btn  custom-btn" id="activationDetails" disabled> Send </button>											
+											</div>										
+											<div th:if = "${modifyUser}">
+												<button type="button" th:onclick="showActivationDialog([[${selectedUser.id}]])" class="btn  custom-btn" id="activationDetails"> Send </button>											
+											</div>		
+										</li>
+									</ul>
+								</div>
+							</div>
+								<div th:id="'modifyConfirmDialog-' + ${selectedUser.id}" class="confirm-dialog invisibleElement">
+									<div class="confirm-content">
+										<p th:text = "'Please confirm update of ' + ${selectedUser.username}"></p>
+										<div class="confirm-buttons">
+											<input type="hidden" name="id" th:value="${selectedUser.id}" />
+											<input type="hidden" name="action" value="modifyUser" />
+											<button type="button" th:onclick="confirmModify([[${selectedUser.id}]])" class="btn  custom-btn"> Confirm </button>
+											<button type="button" th:onclick="cancelModify([[${selectedUser.id}]])" class="btn  custom-btn"> Cancel </button>
+										</div>
+									</div>
+								</div>
+						</form>
+						<div id = "altButtons" style="display: flex;">
+							<form th:action="@{/Management/deleteUserF}" method="post" th:id="'deleteForm-' + ${selectedUser.id}" name = "deletionForm">
+								<div th:id="'deletionConfirmDialog-' + ${selectedUser.id}" class="confirm-dialog invisibleElement">
+									<div class="confirm-content">
+										<p th:text = "'Please confirm deletion of ' + ${selectedUser.username}"></p>
+										<div class="confirm-buttons">
+											<input type="hidden" name="id" th:value="${selectedUser.id}" />
+											<input type="hidden" name="action" value="deleteUser" />
+											<button type="button" th:onclick="confirmUserDeletion([[${selectedUser.id}]])" class="btn  custom-btn"> Confirm </button>
+											<button type="button" th:onclick="cancelUserDeletion([[${selectedUser.id}]])" class="btn  custom-btn"> Cancel </button>
+										</div>
+									</div>
+								</div>
+							</form>
+							<form name="passwordResetForm" th:action="@{/Management/resetPassword}" method="post" th:id="'resetPasswordForm-' + ${selectedUser.id}">
+								<input type="hidden" name="idToReset" th:value="${selectedUser.id}" />
+								<div th:id="'resetPasswordDialog-' + ${selectedUser.id}" class="confirm-dialog invisibleElement">
+									<div class="confirm-content">
+										<p th:text = "'Please confirm password reset of ' + ${selectedUser.username}"></p>
+										<div class="confirm-buttons">
+											<input type="hidden" name="id" th:value="${selectedUser.id}" />
+											<input type="hidden" name="action" value="modifyUser" />
+											<button type="button" th:onclick="confirmPasswordReset([[${selectedUser.id}]])" class="btn  custom-btn"> Confirm </button>
+											<button type="button" th:onclick="cancelPasswordReset([[${selectedUser.id}]])" class="btn  custom-btn"> Cancel </button>
+										</div>
+									</div>
+								</div>
+							</form>
+							<form name="activationForm" th:action="@{/Management/resendActivationMail}" method="post" th:id="'activationForm-' + ${selectedUser.id}">
+								<input type="hidden" name="idToActivate" th:value="${selectedUser.id}" />
+								<div th:id="'activationDialog-' + ${selectedUser.id}" class="confirm-dialog invisibleElement">
+									<div class="confirm-content">
+										<p th:text = "'Please confirm resending the activation email to ' + ${selectedUser.username}"></p>
+										<div class="confirm-buttons">
+											<input type="hidden" name="id" th:value="${selectedUser.id}" />
+											<input type="hidden" name="action" value="modifyUser" />
+											<button type="button" th:onclick="confirmActivation([[${selectedUser.id}]])" class="btn  custom-btn"> Confirm </button>
+											<button type="button" th:onclick="cancelActivation([[${selectedUser.id}]])" class="btn  custom-btn"> Cancel </button>
+										</div>
+									</div>
+								</div>
+							</form>
+							<div class = "buttonMarginView" style = "display: flex; flex-wrap: wrap;">
+								<form th:if = "${viewUser}" th:action="@{/Management/modifyUserF}" method="post" name = "formTransformer">
+									<input type="hidden" name="id" th:value="${selectedUser.id}" />
+									<input type="hidden" name="action" value="modifyUser" /> 
+									<button type="submit" class = "btn  custom-btn buttonMarginLeft"> Modify contact </button>
+								</form>
+				 				<button form = "modificationForm" th:if = "${modifyUser}" type="button" class="btn custom-btn" th:onclick="showModifyConfirmDialog([[${selectedUser.id}]])"> Update database </button>
+				 				<button form = "deletionForm" type="button" class="btn  custom-btn" th:onclick="showUserDeletionConfirmDialog([[${selectedUser.id}]])"> Delete </button>
+								<button onclick="window.location.href='/Management'" type="button" class = "btn  custom-btn"> Cancel </button>
+							</div>
+						</div>
+					</div>				
+				</div>
+			</main>	
+		</div>
+	</div> 
+	<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/myAssets/myJS/usefulScripts.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
+  </body>
+</html>

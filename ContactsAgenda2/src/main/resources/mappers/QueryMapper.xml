@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace = "com.contactspring.mybatis.original.QueryMapper"> 
+ 	<select id = "searchContacts" resultType = "com.contactspring.mybatis.generate.model.ContactFields">
+ 		SELECT 
+  		*
+ 		 FROM contact_fields
+ 		<where>
+ 			creator = #{usernameQueried}
+ 			<if test = "postalCodeQueried != null and postalCodeQueried != ''">
+ 				AND postal_code LIKE CONCAT ('%', #{postalCodeQueried}, '%')
+ 			</if>
+ 			<if test = "addressQueried != null and addressQueried != ''">
+ 				AND address LIKE CONCAT ('%', #{addressQueried}, '%')
+ 			</if>
+ 			<if test = "companyNameQueried != null and companyNameQueried != ''">
+ 				AND company_name LIKE CONCAT ('%', #{companyNameQueried}, '%')
+ 			</if>
+ 			<if test = "lastNameQueried != null and lastNameQueried != ''">
+ 				AND last_name LIKE CONCAT ('%', #{lastNameQueried}, '%')
+ 			</if>
+ 			<if test = "firstNameQueried != null and firstNameQueried != ''">
+ 				AND first_name LIKE CONCAT ('%', #{firstNameQueried}, '%')
+ 			</if>
+ 			<if test = "phoneNumberQueried != null and phoneNumberQueried != ''">
+ 				AND phone_number LIKE CONCAT ('%', #{phoneNumberQueried}, '%')
+ 			</if>
+		</where>
+ 		ORDER BY last_name ASC
+ 	</select>
+ 	
+ 	<select id = "searchContactsAdmin" resultType = "com.contactspring.mybatis.generate.model.ContactFields">
+ 		SELECT 
+  		*
+ 		 FROM contact_fields
+ 		<where>
+ 			<if test = "postalCodeQueried != null and postalCodeQueried != ''">
+ 				AND postal_code LIKE CONCAT ('%', #{postalCodeQueried}, '%')
+ 			</if>
+ 			<if test = "addressQueried != null and addressQueried != ''">
+ 				AND address LIKE CONCAT ('%', #{addressQueried}, '%')
+ 			</if>
+ 			<if test = "companyNameQueried != null and companyNameQueried != ''">
+ 				AND company_name LIKE CONCAT ('%', #{companyNameQueried}, '%')
+ 			</if>
+ 			<if test = "lastNameQueried != null and lastNameQueried != ''">
+ 				AND last_name LIKE CONCAT ('%', #{lastNameQueried}, '%')
+ 			</if>
+ 			<if test = "firstNameQueried != null and firstNameQueried != ''">
+ 				AND first_name LIKE CONCAT ('%', #{firstNameQueried}, '%')
+ 			</if>
+ 			<if test = "phoneNumberQueried != null and phoneNumberQueried != ''">
+ 				AND phone_number LIKE CONCAT ('%', #{phoneNumberQueried}, '%')
+ 			</if>
+		</where>
+ 		ORDER BY last_name ASC
+ 	</select>
+ 	
+ 	<select id = "isUniqueUsernamePro" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
+ 		FROM user_properties
+ 		WHERE username = #{usernameQueried}
+ 	</select>
+ 	
+ 	<select id = "isUniqueEmailPro" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
+ 		FROM user_properties
+ 		WHERE email = #{emailQueried}
+ 	</select>
+ 	
+ 	<select id = "isUniqueUsernameExceptMePro" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
+ 		FROM user_properties
+ 		WHERE username = #{usernameQueried} AND id != #{idQueried}
+ 	</select>
+ 	
+ 	<select id = "isUniqueEmailExceptMePro" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 0 THEN TRUE ELSE FALSE END
+ 		FROM user_properties
+ 		WHERE email = #{emailQueried} AND id != #{idQueried}
+ 	</select>
+ 	
+ 	<select id = "checkRole" resultType = "String"> 
+ 		SELECT rop.role 
+		FROM user_properties pro 
+	    INNER JOIN role_properties rop 
+		ON pro.role_id = rop.role_id
+        WHERE pro.username = #{queriedUsername}
+ 	</select>
+ 	
+ 	<select id = "userParams" resultType = "map"> 
+ 		SELECT sec.username, sec.password, rop.role 
+		FROM user_security sec
+		INNER JOIN user_properties pro ON sec.username = pro.username
+		INNER JOIN role_properties rop ON pro.role_id = rop.role_id
+        WHERE sec.username = #{queriedUsername}
+ 	</select>
+ 	
+ 	<select id = "contactsCounter" resultType = "int">
+ 		SELECT COUNT(*)
+ 		FROM contact_fields
+ 		WHERE creator = #{usernameQueried}
+ 	</select>
+ 	
+ 	<select id = "contactsCounterAdmin" resultType = "int">
+ 		SELECT COUNT(*)
+ 		FROM contact_fields
+ 	</select>
+ 	
+ 	<select id = "selectByCreator" resultType = "com.contactspring.mybatis.generate.model.ContactFields">
+ 		SELECT * 
+ 		FROM contact_fields
+ 		WHERE creator = #{usernameQueried}
+ 		ORDER BY last_name ASC
+ 	</select>
+ 	
+ 	<select id = "paginatorQuery" resultType = "com.contactspring.mybatis.generate.model.ContactFields">
+ 		SELECT * 
+ 		FROM contact_fields
+ 		WHERE creator = #{usernameQueried}
+ 		ORDER BY last_name ASC
+ 		LIMIT #{contactsPerPageQueried} OFFSET #{offsetQueried};
+ 	</select>
+ 	
+ 	<select id = "paginatorQueryAdmin" resultType = "com.contactspring.mybatis.generate.model.ContactFields">
+ 		SELECT * 
+ 		FROM contact_fields
+ 		ORDER BY last_name ASC
+ 		LIMIT #{contactsPerPageQueried} OFFSET #{offsetQueried};
+ 	</select>
+ 	
+ 	<select id = "findByUsernameSec" resultType = "com.contactspring.mybatis.form.ValidatedUserSecurity">
+ 		SELECT * 
+ 		FROM user_security
+ 		WHERE username = #{usernameQueried};
+ 	</select>
+ 	
+ 	<select id = "searchUser" resultType = "com.contactspring.mybatis.form.ValidatedUserProperties">
+ 		SELECT 
+  		*
+ 		FROM user_properties
+ 		<where>
+ 			<if test = "usernameQueried != null and usernameQueried != ''">
+ 				AND username LIKE CONCAT ('%', #{usernameQueried}, '%')
+ 			</if>
+ 			<if test = "emailQueried != null and emailQueried != ''">
+ 				AND email LIKE CONCAT ('%', #{emailQueried}, '%')
+ 			</if>
+ 			<if test = "roleIdQueried != null and roleIdQueried != 0">
+ 				AND role_id = #{roleIdQueried}
+ 			</if>
+ 			<if test = "activeQueried != null">
+ 				AND active = #{activeQueried}
+ 			</if>
+		</where>
+ 		ORDER BY username ASC
+ 	</select>
+ 	
+ 	<select id = "paginatorQueryUsers" resultType = "com.contactspring.mybatis.form.ValidatedUserProperties">
+ 		SELECT * 
+ 		FROM user_properties
+ 		ORDER BY username ASC
+ 		LIMIT #{usersPerPageQueried} OFFSET #{offsetQueried};
+ 	</select>
+ 	
+ 	<select id = "getRoleFromId" resultType = "String">
+ 		SELECT * 
+ 		FROM role_properties
+ 		WHERE role_id = #{roleIdQueried};
+ 	</select>
+ 	
+ 	<select id = "getIdFromRole" resultType = "int">
+ 		SELECT * 
+ 		FROM role_properties
+ 		WHERE role = #{roleTextQueried};
+ 	</select>
+ 	
+ 	 <select id = "usersCounter" resultType = "int">
+ 		SELECT COUNT(*)
+ 		FROM user_properties
+ 	</select>
+ 	
+ 	<select id = "searchToken" resultType = "com.contactspring.mybatis.form.ValidatedUserProperties">
+ 		SELECT 
+  		*
+ 		 FROM user_properties
+ 		<where>
+ 				verification_token = #{tokenQueried}
+		</where>
+ 	</select>
+ 	
+ 	<select id = "searchActive" resultType = "boolean">
+ 		SELECT 
+  		active
+ 		 FROM user_properties
+ 		<where>
+ 				username = #{usernameQueried}
+		</where>
+ 	</select>
+ 	
+ 	<select id = "getBasicsId" resultType = "int">
+ 		SELECT id
+ 		FROM user_basics
+ 		<where>
+ 				username = #{usernameQueried}
+		</where>
+ 	</select>
+ 	
+ 	<select id = "getPropertiesId" resultType = "Integer">
+ 		SELECT id
+ 		FROM user_properties
+ 		<where>
+ 				username = #{usernameQueried}
+		</where>
+ 	</select>
+ 	
+ 	<select id = "userMailNotActivatedMatch" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 1 THEN TRUE ELSE FALSE END
+ 		FROM user_properties
+ 		WHERE email = #{emailQueried} AND username = #{usernameQueried} AND active = FALSE
+ 	</select>
+ 	
+ 	<select id = "findByUsernamePro" resultType = "com.contactspring.mybatis.form.ValidatedUserProperties">
+ 		SELECT * 
+ 		FROM user_properties
+ 		WHERE username = #{usernameQueried};
+ 	</select>
+ 	
+ 	<select id = "findByIdPro" resultType = "com.contactspring.mybatis.form.ValidatedUserProperties">
+ 		SELECT * 
+ 		FROM user_properties
+ 		WHERE id = #{idQueried};
+ 	</select>
+ 	
+ 	<select id = "findByEmailPro" resultType = "com.contactspring.mybatis.form.ValidatedUserProperties">
+ 		SELECT * 
+ 		FROM user_properties
+ 		WHERE email = #{emailQueried};
+ 	</select>
+ 	
+ 	<select id = "findByIdSec" resultType = "com.contactspring.mybatis.form.ValidatedUserSecurity">
+ 		SELECT * 
+ 		FROM user_security
+ 		WHERE id = #{idQueried};
+ 	</select>
+ 	
+ 	<select id = "findByUsernameBas" resultType = "com.contactspring.mybatis.form.ValidatedUserBasics">
+ 		SELECT * 
+ 		FROM user_basics
+ 		WHERE username = #{usernameQueried};
+ 	</select>
+ 	
+ 	<select id = "findByUsernameHis" resultType = "com.contactspring.mybatis.generate.model.UserHistory">
+ 		SELECT * 
+ 		FROM user_history
+ 		WHERE username = #{usernameQueried};
+ 	</select>
+  	
+ 	<select id = "usernameExistsHis" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 1 THEN TRUE ELSE FALSE END
+ 		FROM user_history
+ 		WHERE username = #{usernameQueried}
+ 	</select>	
+  	
+ 	<select id = "usernameExistsPro" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 1 THEN TRUE ELSE FALSE END
+ 		FROM user_properties
+ 		WHERE username = #{usernameQueried}
+ 	</select>	
+ 	
+ 	<select id = "emailExistsPro" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 1 THEN TRUE ELSE FALSE END
+ 		FROM user_properties
+ 		WHERE email = #{emailQueried}
+ 	</select>	
+ 	 	
+ 	 <select id = "getRoleFromUsername" resultType = "int">
+ 	 	SELECT role_id
+ 	 	FROM user_properties
+ 		WHERE username = #{usernameQueried}
+ 	 </select>	
+ 	 
+ 	<select id = "getHistoryId" resultType = "int">
+ 		SELECT 
+  		his.id
+	 	FROM user_history his
+ 		<where>
+ 				username = #{usernameQueried}
+		</where>
+ 	</select>
+ 	 	
+ 	<select id = "getProIdFromUsername" resultType = "Integer">
+ 		SELECT id
+	 	FROM user_properties
+ 		<where>
+ 				username = #{usernameQueried}
+		</where>
+ 	</select>
+ 	 	
+ 	<select id = "getProIdFromEmail" resultType = "Integer">
+ 		SELECT id
+	 	FROM user_properties
+ 		<where>
+ 				email = #{emailQueried}
+		</where>
+ 	</select>
+
+ 	<select id = "getExpiredTokens" resultType = "com.contactspring.mybatis.form.ValidatedUserProperties">
+ 		<![CDATA[
+	 		SELECT *
+	 		FROM user_properties
+	 		WHERE verification_token NOT LIKE '%Token%' AND token_date < #{expirationCutQueried}
+	 		]]>
+ 	</select>
+ 	
+	<select id = "usernameExistsSec" resultType = "boolean">
+ 		SELECT CASE WHEN COUNT(*) = 1 THEN TRUE ELSE FALSE END
+ 		FROM user_security
+ 		WHERE username = #{usernameQueried}
+ 	</select>
+ 	
+	<select id = "getTableBasics" resultType = "String">
+ 		SELECT table_associated
+ 		FROM user_basics
+ 		WHERE username = #{usernameQueried}
+ 	</select>
+ 	
+ 	<select id = "getSecurityId" resultType = "Integer">
+ 		SELECT id
+ 		FROM user_security
+ 		<where>
+ 				username = #{usernameQueried}
+		</where>
+ 	</select>
+ 	
+ 	<select id = "getProUsernameFromId" resultType = "String">
+ 		SELECT username
+ 		FROM user_properties
+ 		<where>
+ 				id = #{idQueried}
+		</where>
+ 	</select>
+ 	
+ 	<select id = "getProEmailFromId" resultType = "String">
+ 		SELECT email
+ 		FROM user_properties
+ 		<where>
+ 				id = #{idQueried}
+		</where>
+ 	</select>
+ 	
+</mapper>
+
