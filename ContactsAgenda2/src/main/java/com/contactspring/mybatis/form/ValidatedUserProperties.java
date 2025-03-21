@@ -6,9 +6,7 @@ import com.contactspring.annotations.ValidEmail;
 import com.contactspring.annotations.ValidUsername;
 import com.contactspring.mybatis.generate.model.UserProperties;
 
-import lombok.Data;
-
-@Data
+//@Data
 public class ValidatedUserProperties extends UserProperties implements Serializable {
 
 	@ValidUsername
@@ -21,6 +19,22 @@ public class ValidatedUserProperties extends UserProperties implements Serializa
     
 	public String verificationToken;
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getRoleName() {
 		return roleName;
 	}
@@ -29,5 +43,5 @@ public class ValidatedUserProperties extends UserProperties implements Serializa
 		this.roleName = roleName;
 	}
 
-
+	
 }
